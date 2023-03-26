@@ -1,0 +1,22 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.App{
+    /* background: linear-gradient(to right, #379d91 0%, #a34d76 100%); */
+    background-color: #1d242c;
+    color-scheme: dark;
+    /* color: rgb(23, 24, 25); */
+    display: flex;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
+    justify-content: flex-start;
+    align-items: center;
+    width: 100vw;
+    min-height: 100vh;
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow:hidden;
+}
