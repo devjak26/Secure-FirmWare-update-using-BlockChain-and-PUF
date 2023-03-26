@@ -1,21 +1,19 @@
 import react, { useState, useEffect } from "react";
 import "./fileUpload.css";
 import img from "./img.webp";
-import ipfs from "../ipfs";
-// import * as IPFS from 'ipfs-core';
+import axios from "axios";
 
-// import * as process from "process";
-// window.process = process;
+const JWT = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiI0NjhkMTgxMS1lOGI1LTQzZDUtYTg4OS0xYjliZWI1NjgzNTkiLCJlbWFpbCI6ImlpdDIwMjAxMDNAaWlpdGEuYWMuaW4iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGluX3BvbGljeSI6eyJyZWdpb25zIjpbeyJpZCI6IkZSQTEiLCJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MX0seyJpZCI6Ik5ZQzEiLCJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MX1dLCJ2ZXJzaW9uIjoxfSwibWZhX2VuYWJsZWQiOmZhbHNlLCJzdGF0dXMiOiJBQ1RJVkUifSwiYXV0aGVudGljYXRpb25UeXBlIjoic2NvcGVkS2V5Iiwic2NvcGVkS2V5S2V5IjoiOWFhMDdkOTBmNTc0NWRiOTQ2ODEiLCJzY29wZWRLZXlTZWNyZXQiOiI2ZDQxOWQ2MzBiZDkwODBhNWFhNGJmZDAyOGViNDM2MWIzNDEwNmRiYzJlMDU0YTZjZDVhM2NjMDRiNDg3MDllIiwiaWF0IjoxNjc5ODUxODMzfQ.-f10NGa3eB6SzzuXXxU-w4p450Bhourg9xJEJURqpgo`;
 
 const FileUpload = () => {
   const [file, setFile] = useState(null);
   const [displayImg, setDisplayImg] = useState("none");
-
+  const [isUloaded, setIsUploaded] = useState(false);
   const [fileName, setFileName] = useState("");
   const [fileType, setFileType] = useState("");
   const [fileHash, setFileHash] = useState(0);
   const [date, setDate] = useState("");
-  const [buffer, setBuffer] = useState([]);
+  const [ipfsHash, setIpfsHash] = useState("");
 
   useEffect(() => {
     if (file) {
@@ -38,47 +36,49 @@ const FileUpload = () => {
       setFileType(temp);
 
       console.log(temp, currentDate, fileHash);
-
-      const fileReader = async () => {
-        let reader = new window.FileReader();
-        reader.readAsArrayBuffer(file);
-        reader.onloadend = () => convertToBuffer(reader);
-
-        // console.log(convertToBuffer(file));
-      };
-
-      fileReader().catch(console.error);
     }
   }, [fileName, file]);
 
-  useEffect(() => {
-    console.log("Buffer", buffer);
+  const handleSubmission = async () => {
+    const formData = new FormData();
+    console.log();
+    formData.append("file", file);
 
-    if (buffer.length > 0) {
-      ipfs.add(buffer, (err, Hash) => {
-        if (err) {
-          console.log(err);
-          return;
-        } else {
-          console.log(Hash[0].hash);
-          return Hash[0].hash;
+    const metadata = JSON.stringify({
+      name: "File name",
+    });
+
+    console.log("metadata");
+
+    formData.append("pinataMetadata", metadata);
+
+    const options = JSON.stringify({
+      cidVersion: 0,
+    });
+    formData.append("pinataOptions", options);
+
+    try {
+      const res = await axios.post(
+        "https://api.pinata.cloud/pinning/pinFileToIPFS",
+        formData,
+        {
+          maxBodyLength: "Infinity",
+          headers: {
+            "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
+            Authorization: JWT,
+          },
         }
-      });
+      );
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
     }
-  }, [buffer]);
-
-
-  const convertToBuffer = async (reader) => {
-    // file converted to a buffer for upload to IPFS
-    const buffer = await Buffer.from(reader.result);
-
-    setBuffer(buffer);
-    // return buffer;
   };
 
   const changeImage = (e) => {
     setFile(e.target.files[0]);
     setDisplayImg("block");
+    setIsUploaded(true);
   };
 
   return (
@@ -93,9 +93,12 @@ const FileUpload = () => {
         />
 
         <label className="label">
-          Choose A File
+          Choose A File'
           <input type="file" onChange={changeImage} className="inputItem" />
         </label>
+        <button onClick={handleSubmission} disabled={!isUloaded}>
+          Submit
+        </button>
       </div>
     </>
   );
