@@ -11,5 +11,10 @@
   "dependencies": {
     "@thirdweb-dev/contracts": "^3",
     "dotenv": "^16.0.3"
+  },
+  "overrides": {
+    "@nomiclabs/hardhat-waffle": {
+    "@nomiclabs/hardhat-ethers": "$@nomiclabs/hardhat-ethers"
   }
+}
 }

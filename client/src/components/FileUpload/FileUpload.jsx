@@ -1,7 +1,8 @@
-import react, { useState, useEffect } from "react";
+import react, { useState, useEffect, useContext } from "react";
 import "./fileUpload.css";
 import img from "./img.webp";
 import axios from "axios";
+import { useStateContext } from "../../context/index";
 
 const JWT = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiI0NjhkMTgxMS1lOGI1LTQzZDUtYTg4OS0xYjliZWI1NjgzNTkiLCJlbWFpbCI6ImlpdDIwMjAxMDNAaWlpdGEuYWMuaW4iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGluX3BvbGljeSI6eyJyZWdpb25zIjpbeyJpZCI6IkZSQTEiLCJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MX0seyJpZCI6Ik5ZQzEiLCJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MX1dLCJ2ZXJzaW9uIjoxfSwibWZhX2VuYWJsZWQiOmZhbHNlLCJzdGF0dXMiOiJBQ1RJVkUifSwiYXV0aGVudGljYXRpb25UeXBlIjoic2NvcGVkS2V5Iiwic2NvcGVkS2V5S2V5IjoiOWFhMDdkOTBmNTc0NWRiOTQ2ODEiLCJzY29wZWRLZXlTZWNyZXQiOiI2ZDQxOWQ2MzBiZDkwODBhNWFhNGJmZDAyOGViNDM2MWIzNDEwNmRiYzJlMDU0YTZjZDVhM2NjMDRiNDg3MDllIiwiaWF0IjoxNjc5ODUxODMzfQ.-f10NGa3eB6SzzuXXxU-w4p450Bhourg9xJEJURqpgo`;
 
@@ -13,13 +14,23 @@ const FileUpload = () => {
   const [fileType, setFileType] = useState("");
   const [fileHash, setFileHash] = useState(0);
   const [date, setDate] = useState("");
-  const [ipfsHash, setIpfsHash] = useState("");
+  const [ipfsHash, setIpfsHash] = useState();
+  const [fileSize, setFileSize]=useState(0);
+  const [URL,setURL]=useState("");
 
-  useEffect(() => {
+
+  const {call}=useStateContext();
+
+const baseURL=`https://gateway.pinata.cloud/ipfs/`
+
+
+
+  const handleSubmission = async () => {
     if (file) {
-      // console.log(file.name);
+      // console.log(file.size);
       setFileName(file.name);
       setFileHash(fileHash + 1);
+      setFileSize(file.size);
 
       const date = new Date();
 
@@ -37,9 +48,7 @@ const FileUpload = () => {
 
       console.log(temp, currentDate, fileHash);
     }
-  }, [fileName, file]);
 
-  const handleSubmission = async () => {
     const formData = new FormData();
     console.log();
     formData.append("file", file);
@@ -69,11 +78,15 @@ const FileUpload = () => {
           },
         }
       );
-      console.log(res.data);
+      console.log(res.data.IpfsHash);
+      setIpfsHash(res.data.IpfsHash);
+      setURL(`${baseURL}${res.data.IpfsHash}`);
+
     } catch (error) {
       console.log(error);
     }
   };
+
 
   const changeImage = (e) => {
     setFile(e.target.files[0]);
@@ -99,6 +112,13 @@ const FileUpload = () => {
         <button onClick={handleSubmission} disabled={!isUloaded}>
           Submit
         </button>
+
+        <button onClick={()=>call(ipfsHash, fileHash, fileName, fileType, date,fileSize)} disabled={!isUloaded}>
+          check
+        </button>
+
+        {/* <a href={`${URL}`} target="_blank">Download</a> */}
+
       </div>
     </>
   );
