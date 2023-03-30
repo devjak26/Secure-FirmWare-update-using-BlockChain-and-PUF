@@ -1,0 +1,7 @@
+.navbar{
+    z-index: 1;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}

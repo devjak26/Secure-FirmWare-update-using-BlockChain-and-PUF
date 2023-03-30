@@ -4,7 +4,7 @@ import { useCallback } from "react";
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
  
-
+import './particles.css'
 const HomePage = () => {
 	 
 	const particlesInit = useCallback(async engine => {
@@ -82,7 +82,7 @@ return (
                             default: "bounce",
                         },
                         random: false,
-                        speed: 6,
+                        speed: 2,
                         straight: false,
                     },
                     number: {

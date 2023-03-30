@@ -26,7 +26,7 @@ const Particle = () => {
                   //     value: "#0d47a1",
                   // },
               },
-              fpsLimit: 120,
+              fpsLimit: 10,
               interactivity: {
                   events: {
                       onClick: {
@@ -41,7 +41,7 @@ const Particle = () => {
                   },
                   modes: {
                       push: {
-                          quantity: 4,
+                          quantity: 1,
                       },
                       repulse: {
                           distance: 200,
@@ -57,7 +57,7 @@ const Particle = () => {
                       color: "#ffffff",
                       distance: 150,
                       enable: true,
-                      opacity: 0.5,
+                      opacity: 0.2,
                       width: 1,
                   },
                   collisions: {
@@ -67,10 +67,10 @@ const Particle = () => {
                       direction: "none",
                       enable: true,
                       outModes: {
-                          default: "bounce",
+                          default: "decay",
                       },
                       random: false,
-                      speed: 6,
+                      speed: 0.1,
                       straight: false,
                   },
                   number: {
@@ -78,10 +78,10 @@ const Particle = () => {
                           enable: true,
                           area: 800,
                       },
-                      value: 80,
+                      value: 40,
                   },
                   opacity: {
-                      value: 0.5,
+                      value: 0.2,
                   },
                   shape: {
                       type: "circle",

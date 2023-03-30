@@ -4,10 +4,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import logo from './logo.jpeg';
+import './navbar.css';
 
 const NavBar = () => {
   return (
-		<>
+		<div className='navbar'>
       <Navbar collapseOnSelect expand="lg" bg="navbar" variant="light">
         <Container>
           <Navbar.Brand href="#home"><img src={logo} alt="Logo" width="30" height="30" className="d-inline-block align-text-top me-2" />SUF</Navbar.Brand>
@@ -21,7 +22,7 @@ const NavBar = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-    </>
+    </div>
   );
 };
 

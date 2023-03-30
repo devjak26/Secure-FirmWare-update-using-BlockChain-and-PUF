@@ -21,13 +21,6 @@ const FileUpload = () => {
 
   const { call1, totalData } = useFile();
 
-  // console.log(useFile());
-    useEffect(()=>{
-      console.log("data in fileUploader...",totalData);
-    },[totalData])
-
-
-  const baseURL = `https://gateway.pinata.cloud/ipfs/`;
 
   const handleSubmission = async () => {
     // console.log(file.size);
@@ -81,7 +74,7 @@ const FileUpload = () => {
       );
       console.log(res.data.IpfsHash);
       setIpfsHash(res.data.IpfsHash);
-      setURL(`${baseURL}${res.data.IpfsHash}`);
+      
     } catch (error) {
       console.log(error);
     }

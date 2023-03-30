@@ -6,16 +6,16 @@ import NavBar from "./components/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./pages";
 import SignInPage from "./pages/signin";
+import FileUpload from "./components/FileUpload/FileUpload";
  const App = () => {
   
   return (
     <div>
-      <div>
-        <Router>
           <NavBar />
+      <div className="App">
+        <Router>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            
             <Route path="/signin" element={<SignInPage />} 
             />
              <Route path="/FileUpload" element={<FileUpload />} 
