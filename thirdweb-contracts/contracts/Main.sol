@@ -9,13 +9,11 @@ contract Main is Ownable {
         string fileType;
         uint fileSize;
         string dateAdded;
-        bool exist;
     }
 
-    mapping(string => DocInfo) collection;
-    // fileHash -> file MetaDta
+    // mapping(string => DocInfo) collection;
 
-    // event HashAdded(string ipfsHash, string fileHash, uint dateAdded);
+    DocInfo[] private metadata; 
 
     constructor() {
         owner = msg.sender;
@@ -23,53 +21,25 @@ contract Main is Ownable {
 
     function add(
         string memory _ipfsHash,
-        string memory _fileHash,
         string memory _fileName,
         string memory _fileType,
         string memory _dateAdded,
         uint _fileSize
     ) 
     public onlyOwner {
-        require(
-            collection[_fileHash].exist == false,
-            "[E1] This hash already exists in contract."
-        );
         DocInfo memory docInfo = DocInfo(
             _ipfsHash,
             _fileName,
             _fileType,
             _fileSize,
-            _dateAdded,
-            true
+            _dateAdded
         );
-        collection[_fileHash] = docInfo;
 
-        // emit HashAdded(_ipfsHash, _fileHash, _dateAdded);
+        metadata.push(docInfo);
     }
 
-    function get(
-        string memory _fileHash
-    )
-        public
-        view
-        returns (
-            string memory,
-            string memory,
-            string memory,
-            string memory,
-            string memory,
-            uint,
-            bool
-        )
+    function get() public view returns ( DocInfo[] memory)
     {
-        return (
-            _fileHash,
-            collection[_fileHash].ipfsHash,
-            collection[_fileHash].fileName,
-            collection[_fileHash].fileType,
-            collection[_fileHash].dateAdded,
-            collection[_fileHash].fileSize,
-            collection[_fileHash].exist
-        );
+        return metadata;
     }
 }

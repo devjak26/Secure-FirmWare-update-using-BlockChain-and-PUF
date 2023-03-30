@@ -12,24 +12,24 @@ const FileUpload = () => {
   const [isUloaded, setIsUploaded] = useState(false);
   const [fileName, setFileName] = useState("");
   const [fileType, setFileType] = useState("");
-  const [fileHash, setFileHash] = useState(0);
+  const [fileHash, setFileHash] = useState("1000");
   const [date, setDate] = useState("");
   const [ipfsHash, setIpfsHash] = useState();
   const [fileSize, setFileSize]=useState(0);
   const [URL,setURL]=useState("");
 
 
-  const {call}=useStateContext();
+  const {call,totalData}=useStateContext();
+
 
 const baseURL=`https://gateway.pinata.cloud/ipfs/`
-
 
 
   const handleSubmission = async () => {
     if (file) {
       // console.log(file.size);
       setFileName(file.name);
-      setFileHash(fileHash + 1);
+      // setFileHash(fileHash + 1);
       setFileSize(file.size);
 
       const date = new Date();
@@ -114,7 +114,7 @@ const baseURL=`https://gateway.pinata.cloud/ipfs/`
         </button>
 
         <button onClick={()=>call(ipfsHash, fileHash, fileName, fileType, date,fileSize)} disabled={!isUloaded}>
-          check
+          call
         </button>
 
         {/* <a href={`${URL}`} target="_blank">Download</a> */}

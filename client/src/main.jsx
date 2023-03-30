@@ -8,13 +8,12 @@ import { StateContextProvider } from "./context/index";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-
 root.render(
     <ThirdwebProvider activeChain="goerli">
-        <Router>
+        
         <StateContextProvider>
         <App />
       </StateContextProvider>
-        </Router>
+        
     </ThirdwebProvider>
 )
