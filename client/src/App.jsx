@@ -7,7 +7,7 @@ import NavBar from "./components/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./pages";
 import SignInPage from "./pages/signin";
- 
+
 const App = () => {
   
   return (

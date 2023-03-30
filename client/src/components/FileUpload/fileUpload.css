@@ -33,7 +33,8 @@
     padding: 6px;
     font-weight: 500;
     font-size: large;
-    color: #06fece;
+    background-color: #06fece;
+    color: #1d242c;
 }
 
 .label:hover{

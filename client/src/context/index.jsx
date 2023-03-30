@@ -1,51 +1,74 @@
-import React, { useContext, createContext, useState, useEffect } from 'react';
+import React, { useContext, createContext, useEffect, useState } from "react";
 
-import { useAddress, useContract, useMetamask, useContractWrite,useContractRead } from '@thirdweb-dev/react';
-import { ethers } from 'ethers';
-import { EditionMetadataWithOwnerOutputSchema } from '@thirdweb-dev/sdk';
+import {
+  useAddress,
+  useContract,
+  useMetamask,
+  useContractWrite,
+  useContractRead,
+} from "@thirdweb-dev/react";
+import { ethers } from "ethers";
+import { EditionMetadataWithOwnerOutputSchema } from "@thirdweb-dev/sdk";
 
-const StateContext = createContext();
+const FileContext = createContext();
 
-export const StateContextProvider = ({ children }) => {
+const FileProvider = ({ children }) => {
 
-  // const [totalData,setTotalData]=useState();
+  const [totalData,setTotalData]=useState([]);
 
-  // useEffect(()=>{
-  //   const { data, isloading } = useContractRead(contract, "get", 1);
-  //   setTotalData(data);
-  // },[]);
+  const { contract } = useContract(
+    "0x9f75fce6a61Bc2bd052c02be60BA8C4e76944f64"
+  );
 
-const { contract } = useContract("0x6F3D978A845bA9E9A0972ECd1Df17a841F6106F5");
-  const { mutateAsync: add, isLoading } = useContractWrite(contract, "add")
+    useEffect(()=>{
+    if(contract)
+      getFun();
+  },[contract])
+
+  // console.log(contract);
+  const { mutateAsync: add, isLoading } = useContractWrite(contract, "add");
 
   const address = useAddress();
   const connect = useMetamask();
 
-  const call = async (ipfsHash, fileHash, fileName, fileType, date,fileSize) => {
+
+  const call1 = async (ipfsHash, fileName, fileType, date, fileSize) => {
     try {
-      console.log(fileHash);
-      const data = await add([ ipfsHash, fileHash, fileName, fileType, date, fileSize ]);
+      console.log("tes",ipfsHash, fileName, fileType, date, fileSize);
+      connect();
+      const data = await add([ipfsHash, fileName, fileType, date, fileSize]);
       console.info("contract call successs", data);
+      // getFun();
     } catch (err) {
       console.error("contract call failure", err);
     }
-  }
+  };
 
-  // const { data, isloading } = useContractRead(contract, "get", 1)
-  // console.log(data)
+
+  const getFun = async() => {
+    const data1=await contract.call("get");
+    console.log(data1);
+    setTotalData([...data1]);
+};
+
   return (
-    <StateContext.Provider
-      value={{ 
+    <FileContext.Provider
+      value={{
         address,
         contract,
         connect,
-        call
-        // totalData
+        call1,
+        totalData
       }}
     >
       {children}
-    </StateContext.Provider>
-  )
+    </FileContext.Provider>
+  );
+};
+
+const useFile = ()=>{
+  return useContext(FileContext);
 }
 
-export const useStateContext = () => useContext(StateContext);
+
+export {FileProvider, useFile};
