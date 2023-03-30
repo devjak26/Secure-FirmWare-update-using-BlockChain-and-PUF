@@ -7,8 +7,9 @@ import NavBar from "./components/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./pages";
 import SignInPage from "./pages/signin";
-
+ 
 const App = () => {
+  
   return (
     <div>
       <div>
@@ -17,7 +18,6 @@ const App = () => {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/signin" element={<SignInPage />} 
-            
             />
           </Routes>
         </Router>
@@ -25,6 +25,8 @@ const App = () => {
       <div className="App">
         <FileUpload />
       </div>
+      
+
     </div>
   );
 };
