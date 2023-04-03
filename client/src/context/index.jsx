@@ -25,17 +25,18 @@ const FileProvider = ({ children }) => {
       getFun();
   },[contract])
 
-  // console.log(contract);
   const { mutateAsync: add, isLoading } = useContractWrite(contract, "add");
 
   const address = useAddress();
-  const connect = useMetamask();
+  console.log("address",address);
 
+  const connect = useMetamask();
 
   const call1 = async (ipfsHash, fileName, fileType, date, fileSize) => {
     try {
       console.log("tes",ipfsHash, fileName, fileType, date, fileSize);
       connect();
+      console.log("address...",address);
       const data = await add([ipfsHash, fileName, fileType, date, fileSize]);
       console.info("contract call successs", data);
       // getFun();
