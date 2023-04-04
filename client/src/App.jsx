@@ -11,6 +11,7 @@ import Login from "./pages/signin/Signin";
 import Register from "./pages/signUp/Signup";
 import FileUpload from "./pages/FileUpload/FileUpload";
 import SimpleTable from "./pages/table/SimpleTable";
+import Profile from "./pages/profile/Profile"
 
 const App = () => {
   const [isLogedIn, setIsLogedIn] = useState(false);
@@ -73,7 +74,7 @@ const App = () => {
 
             <Route
               path="/profile"
-              element={<FileUpload isAdmin={isAdmin} />}
+              element={<Profile isAdmin={isAdmin} />}
             />
           </Routes>
         </div>

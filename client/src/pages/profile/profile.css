@@ -1,0 +1,19 @@
+.section{
+    width: 60vw;
+    margin: 0;
+    padding: 0;
+    background-color: #eee;
+    margin-top: 5vw;
+}
+
+.user{
+    text-align: center;
+    color: aqua;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    font-size: large;
+    font-weight: bold;
+}
+
+ 
