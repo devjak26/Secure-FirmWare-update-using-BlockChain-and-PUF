@@ -1,16 +1,18 @@
 pragma solidity ^0.8.9;
 
 contract Main {
+    // a structure for file metadata
     struct DocInfo {
         string ipfsHash;
         string fileName;
         string fileType;
         uint256 fileSize;
         string dateAdded;
-        string timeStamp;
+        string timeAdded;
         uint256 downloadCount;
     }
 
+    // user info structure for sign up
     struct UserInfo {
         string name;
         string username;
@@ -39,10 +41,7 @@ contract Main {
         // first admin only who can add another admins
     }
 
-    function adminAdd(
-        string memory prev,
-        string memory newAdmin
-    ) public returns (uint8) {
+    modifier validAdmin(string memory prev, string memory newAdmin) {
         uint8 flag = 0;
 
         for (uint256 i = 0; i < adminList.length; i++) {
@@ -63,31 +62,47 @@ contract Main {
             }
         }
 
-        if (flag != 1) return flag;
-
-        adminList.push(newAdmin);
-        return flag;
+        require(flag == 1, "This User can't be a Admin");
+        _;
     }
 
+    modifier isSignUp(string memory _address) {
+        require(
+            userNameToData[_address].isexist != true,
+            "You are Already signIn.."
+        );
+        _;
+    }
+
+    // before adding a new admin check 2 things:
+    // 1) new user is not in admin list
+    // 2) prev. user is in admin list
+    function adminAdd(
+        string memory prev,
+        string memory newAdmin
+    ) public validAdmin(prev, newAdmin) {
+        adminList.push(newAdmin);
+    }
+
+    //  new user sign Up but before sign Up check:
+    //  already this user is register or not
     function signUp(
         string memory _address,
         string memory _name,
         string memory _userName,
         string memory _email
-    ) public returns (bool) {
-        if (userNameToData[_address].isexist) return false;
+    ) public isSignUp(_address) {
         UserInfo memory userInfo = UserInfo(_name, _userName, _email, true);
 
         userNameToData[_address] = userInfo;
-        return true;
     }
 
-    function signIn(string memory _address) public view returns (bool) {
-        if (userNameToData[_address].isexist) return true;
-
-        return false;
+    // just check already registerd or not
+    function signIn(string memory _address) public view returns (UserInfo memory) {
+        return userNameToData[_address];
     }
 
+    //  checkin for valid admin
     function isAdmin(string memory _address) public view returns (bool) {
         bool flag = false;
 
@@ -104,6 +119,7 @@ contract Main {
         return flag;
     }
 
+    // adding new file in system
     function addFile(
         string memory _address,
         string memory _ipfsHash,
@@ -124,9 +140,10 @@ contract Main {
         );
 
         metadata.push(docInfo);
-        newDownloadByUser(_address, _ipfsHash);
+        newUploadByAdmin(_address, _ipfsHash);
     }
 
+    // if a new file is downloaded by user then increase download count of file and added the file in download list of user
     function newDownloadByUser(
         string memory _address,
         string memory _ipfs
@@ -136,6 +153,7 @@ contract Main {
         newDownload(_ipfs);
     }
 
+    // if a new file is uploaded then added this file to list of files for admin
     function newUploadByAdmin(
         string memory _address,
         string memory _ipfs
@@ -154,7 +172,22 @@ contract Main {
         }
     }
 
+    // return all available files
     function getFiles() public view returns (DocInfo[] memory) {
         return metadata;
+    }
+
+    // return all files downloaded by a user
+    function downloadedbyUser(
+        string memory _address
+    ) public view returns (string[] memory) {
+        return downloadedByUser[_address];
+    }
+
+    // return all files uploaded by a admin
+    function uploadedbyAdmin(
+        string memory _address
+    ) public view returns (string[] memory) {
+        return uploadedByAdmin[_address];
     }
 }

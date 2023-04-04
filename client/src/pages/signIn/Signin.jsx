@@ -3,12 +3,24 @@ import { useAddress, useMetamask } from "@thirdweb-dev/react";
 import { useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import "./signin.css";
+import { useFile } from "../../context/index";
 
-const Signin = ({ isLogedIn, isLogedinHandler, adminHandler }) => {
+const Signin = ({ isLogedIn, logedinHandler, adminHandler }) => {
   const address = useAddress();
   const connect = useMetamask();
 
   // console.log("Hello from signin");
+  const {
+    fileData,
+    addFileFunction,
+    isAdminFunction,
+    signInFunction,
+    signUpFunction,
+    newDownloadByUserFunction,
+    adminAddFunction,
+    filesUploadedbyAdmin,
+    filesdownloadedbyUser
+  } = useFile();
 
   const handleSubmission = async () => {
     await connect();
@@ -16,12 +28,19 @@ const Signin = ({ isLogedIn, isLogedinHandler, adminHandler }) => {
     // console.log(typeof address);
 
     if (address != undefined) {
-      isLogedinHandler();
+      let signin = await signInFunction(address);
+      console.log(signin.isexist);
 
-      // check for admin in backend
-      let isadmin = false;
+      if (signin.isexist == true) {
+        await logedinHandler();
 
-      if (isadmin == true) adminHandler();
+        // check for admin in backend
+        let isadmin = await isAdminFunction(address);
+        console.log(isadmin, "Signin admin");
+
+        if (isadmin == true) 
+          await adminHandler();
+      }
     }
   };
 

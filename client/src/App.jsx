@@ -24,10 +24,12 @@ const App = () => {
 
   const logedinHandler = () => {
     setIsLogedIn(true);
+    console.log("loged in");
   };
 
   const adminHandler = () => {
     setIsAdmin(true);
+    console.log("loged in is admin");
   };
 
   return (
@@ -50,7 +52,7 @@ const App = () => {
               element={
                 <Login
                   isLogedIn={isLogedIn}
-                  isLogedinHandler={logedinHandler}
+                  logedinHandler={logedinHandler}
                   adminHandler={adminHandler}
                 />
               }
@@ -61,7 +63,7 @@ const App = () => {
               element={
                 <Register
                   isLogedIn={isLogedIn}
-                  isLogedinHandler={logedinHandler}
+                  logedinHandler={logedinHandler}
                   adminHandler={adminHandler}
                 />
               }
