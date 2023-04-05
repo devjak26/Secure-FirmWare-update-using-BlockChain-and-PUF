@@ -4,8 +4,75 @@
     padding: 0;
     background-color: #eee;
     margin-top: 5vw;
+
+}
+.section > .profilehead{
+    margin: auto;
+    width: 60vw;
+    background-color: rgb(183, 122, 31);
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: xx-large;
+    text-align: center;
+}
+.section > .container{
+    display: flex;
+    flex-direction: row;
 }
 
+.section>.container>.left{
+    margin: 5px;
+    padding: 10px;
+}
+
+.section>.container>.right{
+    border: 1px solid black;
+    margin: 5px;
+    padding: 10px;
+    word-spacing: 2px;
+    letter-spacing: 1px;
+    font-size: medium;
+    line-height: 29px;
+}
+
+.section>.container>.right>.btns{
+    display: flex;
+    justify-content: center;
+}
+
+.section>.container>.right>.btns>.btn{
+    border: 1px solid aquamarine;
+    padding: 5px;
+    margin: 15px;
+}
+
+.section>.container>.right>.btns>.btn:hover{
+    background-color: aqua;
+}
+
+.section> .bottom{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 30px;
+    margin: auto;
+    text-align: center;
+    align-items: center;
+}
+
+.section> .bottom>.btn{
+    border: 1px solid aquamarine;
+    padding: 5px;
+    margin: 15px;
+}
+
+.section> .bottom>.btn{
+    background-color: aqua;
+}
+
+.section> .bottom>.form-control{
+    width: 20vw;
+}
 .user{
     text-align: center;
     color: aqua;

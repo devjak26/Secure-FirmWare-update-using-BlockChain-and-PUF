@@ -12,6 +12,7 @@ import Register from "./pages/signUp/Signup";
 import FileUpload from "./pages/FileUpload/FileUpload";
 import SimpleTable from "./pages/table/SimpleTable";
 import Profile from "./pages/profile/Profile";
+import History from "./pages/history/History";
 
 const App = () => {
   const [isLogedIn, setIsLogedIn] = useState(
@@ -57,7 +58,7 @@ const App = () => {
 
         <div>
           <Routes>
-            <Route path="/" element={<SimpleTable />} />
+            <Route path="/" element={<SimpleTable user={data} />} />
 
             <Route
               path="/login"
@@ -84,6 +85,11 @@ const App = () => {
             <Route
               path="/fileUpload"
               element={<FileUpload isAdmin={isAdmin} />}
+            />
+
+            <Route
+              path="/history"
+              element={<History isAdmin={isAdmin} user={data}/>}
             />
 
             <Route

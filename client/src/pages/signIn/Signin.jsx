@@ -19,7 +19,7 @@ const Signin = ({ isLogedIn, logedinHandler, adminHandler }) => {
     newDownloadByUserFunction,
     adminAddFunction,
     filesUploadedbyAdmin,
-    filesdownloadedbyUser
+    filesdownloadedbyUser,
   } = useFile();
 
   const handleSubmission = async () => {
@@ -31,9 +31,9 @@ const Signin = ({ isLogedIn, logedinHandler, adminHandler }) => {
       let signin = await signInFunction(address);
 
       console.log(signin.isexist);
-      
+
       if (signin.isexist == true) {
-        const user=[signin.name,signin.username,signin.email,address];
+        const user = [signin.name, signin.username, signin.email, address];
         console.log(user);
         logedinHandler(user);
 
@@ -41,8 +41,7 @@ const Signin = ({ isLogedIn, logedinHandler, adminHandler }) => {
         let isadmin = await isAdminFunction(address);
         console.log(isadmin, "Signin admin");
 
-        if (isadmin == true) 
-          await adminHandler();
+        if (isadmin == true) await adminHandler();
       }
     }
   };

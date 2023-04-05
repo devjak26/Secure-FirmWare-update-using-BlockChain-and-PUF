@@ -6,27 +6,10 @@ import "react-toastify/dist/ReactToastify.css";
 import profileimg from "./profileimg.png";
 import axios from "axios";
 import { useFile } from "../../context/index";
-import {
-  MDBCol,
-  MDBContainer,
-  MDBRow,
-  MDBCard,
-  MDBCardText,
-  MDBCardBody,
-  MDBCardImage,
-  MDBBtn,
-  MDBBreadcrumb,
-  MDBBreadcrumbItem,
-  MDBProgress,
-  MDBProgressBar,
-  MDBIcon,
-  MDBListGroup,
-  MDBInput,
-  MDBListGroupItem,
-} from "mdb-react-ui-kit";
 
 const Profile = ({ isAdmin, user, isLogedIn }) => {
   const navigate = useNavigate();
+  console.log(user[0]);
   const {
     fileData,
     addFileFunction,
@@ -39,30 +22,29 @@ const Profile = ({ isAdmin, user, isLogedIn }) => {
     filesdownloadedbyUser,
   } = useFile();
 
-  const [fileCount, setfileCount] = useState(0);
   const [newAdmin, setNewAdmin] = useState("");
 
   const changenewAdmin = (event) => {
     setNewAdmin(event.target.value);
   };
 
-  const submitNewAdmin = () => {
-    adminAddFunction(user.address, newAdmin);
+  const submitNewAdmin = async() => {
+    await adminAddFunction(user[3], newAdmin);
   };
 
-  const historyHandler = () => {
-    if (fileCount == 0) {
+  const historyHandler = async () => {
+    const data = await filesdownloadedbyUser(user[3]);
+    console.log(data);
+
+    if (data.length == 0) {
       toast("You are not Downloaded any firmware file yet...");
     } else {
       navigate("/history");
     }
   };
 
-  const countFunction = async () => {
-    const res = await axios.get(
-      `http://localhost:9002/getfileCount/${user.userName}`
-    );
-    setfileCount(res.data.fileCount);
+  const uploadHandler = () => {
+    navigate("/fileUpload");
   };
 
   return (
@@ -81,112 +63,48 @@ const Profile = ({ isAdmin, user, isLogedIn }) => {
       />
       <ToastContainer />
 
-      <section className="section">
-        <MDBContainer className="py-5">
-          <MDBRow>
-            <MDBCol>
-              <MDBBreadcrumb className="bg-light rounded-3 p-3 mb-4">
-                <MDBBreadcrumbItem className="user" active>
-                  User Profile
-                </MDBBreadcrumbItem>
-              </MDBBreadcrumb>
-            </MDBCol>
-          </MDBRow>
+      <div className="section">
+        <div className="profilehead">{user[1]} profile</div>
+        <div className="container">
+          <div className="left">
+            <img
+              src={profileimg}
+              alt="avatar"
+              className="rounded-circle"
+              width="85%"
+            ></img>
+          </div>
 
-          <MDBRow>
-            <MDBCol lg="4">
-              <MDBCard className="mb-4">
-                <MDBCardBody className="text-center">
-                  <MDBCardImage
-                    src={profileimg}
-                    alt="avatar"
-                    className="rounded-circle"
-                    width="55%"
-                    // style={{ width: '600px' }}
-                    fluid
-                  />
-                  <p className="text-muted mb-1">Full Stack Developer</p>
-                  <div className="d-flex justify-content-center mb-2">
-                    <MDBBtn outline className="ms-1">
-                      History
-                    </MDBBtn>
-                    <MDBBtn outline className="ms-1">
-                      UploadFile
-                    </MDBBtn>
-                  </div>
-                </MDBCardBody>
-              </MDBCard>
-            </MDBCol>
-            <MDBCol lg="8">
-              <MDBCard className="mb-4 ">
-                <MDBCardBody>
-                  <MDBRow>
-                    <MDBCol sm="3">
-                      <MDBCardText>Full Name</MDBCardText>
-                    </MDBCol>
-                    <MDBCol sm="9">
-                      <MDBCardText className="text-muted">
-                        {user[0]}
-                      </MDBCardText>
-                    </MDBCol>
-                  </MDBRow>
-                  <hr />
-                  <MDBRow>
-                    <MDBCol sm="3">
-                      <MDBCardText>Email</MDBCardText>
-                    </MDBCol>
-                    <MDBCol sm="9">
-                      <MDBCardText className="text-muted">
-                        {user[2]}
-                      </MDBCardText>
-                    </MDBCol>
-                  </MDBRow>
-                  <hr />
+          <div className="right">
+            <div className="username">Name : {user[0]}</div>
+            <div className="useremail">Email : {user[2]}</div>
+            <div className="address">MetaMask Address : {user[3]}</div>
 
-                  {/* <MDBRow>
-                    <MDBCol sm="3">
-                      <MDBCardText>Mobile</MDBCardText>
-                    </MDBCol>
-                    <MDBCol sm="9">
-                      <MDBCardText className="text-muted">
-                        (098) 765-4321
-                      </MDBCardText>
-                    </MDBCol>
-                  </MDBRow> */}
-                  <hr />
-                  <MDBRow>
-                    <MDBCol sm="3">
-                      <MDBCardText>Metamask Address</MDBCardText>
-                    </MDBCol>
-                    <MDBCol sm="9">
-                      <MDBCardText className="text-muted">
-                        {user[3]}
-                      </MDBCardText>
-                    </MDBCol>
-                  </MDBRow>
-                </MDBCardBody>
-              </MDBCard>
-            </MDBCol>
+            <div className="btns">
+              <button className="btn" onClick={historyHandler}>History</button>
 
-            <MDBRow>
-              <MDBCol>
-                <input
-                  className="form-control"
-                  type="text"
-                  placeholder="Input New Admin Address"
-                  onChange={changenewAdmin}
-                />
-              </MDBCol>
+              {isAdmin && (
+                <button className="btn" onClick={uploadHandler}>
+                  UploadFile
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
 
-              <MDBCol>
-                <MDBBtn outline className="ms-1" onClick={submitNewAdmin}>
-                  AddAdmin
-                </MDBBtn>
-              </MDBCol>
-            </MDBRow>
-          </MDBRow>
-        </MDBContainer>
-      </section>
+        <div className="bottom">
+          <input
+            className="form-control"
+            type="text"
+            placeholder="Input New Admin Address"
+            onChange={changenewAdmin}
+          />
+
+          <button className="btn" onClick={submitNewAdmin}>
+            Admin Add
+          </button>
+        </div>
+      </div>
     </>
   );
 };

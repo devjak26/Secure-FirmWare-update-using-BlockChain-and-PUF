@@ -30,7 +30,6 @@ const FileProvider = ({ children }) => {
     "addFile"
   );
 
-
   const { mutateAsync: newDownloadByUser, isLoading2 } = useContractWrite(
     contract,
     "newDownloadByUser"
@@ -97,10 +96,17 @@ const FileProvider = ({ children }) => {
 
   const signUpFunction = async (address, name, userName, email) => {
     try {
-      const data = await contract.call("signUp",address, name, userName, email);
+      connect();
+      const data = await contract.call(
+        "signUp",
+        address,
+        name,
+        userName,
+        email
+      );
       // signUp([address, name, userName, email]);
-     
-      console.info("contract call successs..",data);
+
+      console.info("contract call successs..", data);
       return data;
     } catch (err) {
       console.error("contract call failure", err);
@@ -108,30 +114,34 @@ const FileProvider = ({ children }) => {
     }
   };
 
-  const filesUploadedbyAdmin =async(address)=>{
-    const files=await contract.call("uploadedbyAdmin",address);
+  const filesUploadedbyAdmin = async (address) => {
+    const files = await contract.call("uploadedbyAdmin", address);
     console.log(files);
     return files;
-  }
+  };
 
-  const filesdownloadedbyUser =async(address)=>{
-    const files=await contract.call("downloadedbyUser",address);
+  const filesdownloadedbyUser = async (address) => {
+    const files = await contract.call("downloadedbyUser", address);
     console.log(files);
 
     return files;
-  }
+  };
 
   const newDownloadByUserFunction = async (address, ipfs) => {
     try {
+      connect();
       const data = await newDownloadByUser([address, ipfs]);
       console.info("contract call successs", data);
+      return data;
     } catch (err) {
       console.error("contract call failure", err);
+      return err;
     }
   };
 
   const adminAddFunction = async (prev, newAdmin) => {
     try {
+      connect();
       const data = await adminAdd([prev, newAdmin]);
       console.info("contract call successs", data);
       return data;
@@ -155,7 +165,7 @@ const FileProvider = ({ children }) => {
         newDownloadByUserFunction,
         adminAddFunction,
         filesUploadedbyAdmin,
-        filesdownloadedbyUser
+        filesdownloadedbyUser,
       }}
     >
       {children}
