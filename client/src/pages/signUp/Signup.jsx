@@ -3,13 +3,26 @@ import { useAddress, useMetamask } from "@thirdweb-dev/react";
 import { useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import "./signup.css";
+import { useFile } from "../../context/index";
 
-const signup = ({ isLogedIn, isLogedinHandler, adminHandler }) => {
+const signup = ({ isLogedIn, logedinHandler, adminHandler }) => {
   const [user, setUser] = useState({
     fname: "",
     uname: "",
     email: "",
   });
+
+  const {
+    fileData,
+    addFileFunction,
+    isAdminFunction,
+    signInFunction,
+    signUpFunction,
+    newDownloadByUserFunction,
+    adminAddFunction,
+    filesUploadedbyAdmin,
+    filesdownloadedbyUser,
+  } = useFile();
 
   const address = useAddress();
   const connect = useMetamask();
@@ -18,24 +31,37 @@ const signup = ({ isLogedIn, isLogedinHandler, adminHandler }) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const registerHandler = async() => {
+  const registerHandler = async () => {
     // console.log(user);
     await connect();
     console.log("address", address);
     // console.log(typeof address);
 
     if (address != undefined) {
-      isLogedinHandler();
+      let signup = await signUpFunction(
+        address,
+        user.fname,
+        user.uname,
+        user.email
+      );
 
-      // send data in backend
-      
+      let cc = await signup.receipt;
 
-      // check for admin in backend
-      let isadmin = false;
+      console.log(cc);
 
-      if (isadmin == true) adminHandler();
+      if (cc != undefined) {
+        const signupuser = [user.fname, user.uname, user.email, address];
+        console.log(signupuser);
+        logedinHandler(signupuser);
+
+        // check for admin in backend
+        let isadmin = await isAdminFunction(address);
+        console.log(isadmin, "SignUp admin");
+
+        if (isadmin == true) await adminHandler();
+      }
+    }
   };
-}
 
   return (
     <div className="signup">

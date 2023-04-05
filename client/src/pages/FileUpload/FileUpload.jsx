@@ -2,10 +2,9 @@ import react, { useState, useEffect, useContext } from "react";
 import "./fileUpload.css";
 import img from "./img.webp";
 import axios from "axios";
-import {useFile } from "../../context/index";
+import { useFile } from "../../context/index";
 
 const JWT = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiI0NjhkMTgxMS1lOGI1LTQzZDUtYTg4OS0xYjliZWI1NjgzNTkiLCJlbWFpbCI6ImlpdDIwMjAxMDNAaWlpdGEuYWMuaW4iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGluX3BvbGljeSI6eyJyZWdpb25zIjpbeyJpZCI6IkZSQTEiLCJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MX0seyJpZCI6Ik5ZQzEiLCJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MX1dLCJ2ZXJzaW9uIjoxfSwibWZhX2VuYWJsZWQiOmZhbHNlLCJzdGF0dXMiOiJBQ1RJVkUifSwiYXV0aGVudGljYXRpb25UeXBlIjoic2NvcGVkS2V5Iiwic2NvcGVkS2V5S2V5IjoiOWFhMDdkOTBmNTc0NWRiOTQ2ODEiLCJzY29wZWRLZXlTZWNyZXQiOiI2ZDQxOWQ2MzBiZDkwODBhNWFhNGJmZDAyOGViNDM2MWIzNDEwNmRiYzJlMDU0YTZjZDVhM2NjMDRiNDg3MDllIiwiaWF0IjoxNjc5ODUxODMzfQ.-f10NGa3eB6SzzuXXxU-w4p450Bhourg9xJEJURqpgo`;
-
 
 const FileUpload = () => {
   const [file, setFile] = useState(null);
@@ -14,19 +13,25 @@ const FileUpload = () => {
   const [fileName, setFileName] = useState("");
   const [fileType, setFileType] = useState("");
   const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
   const [ipfsHash, setIpfsHash] = useState();
   const [fileSize, setFileSize] = useState(0);
   const [URL, setURL] = useState("");
-  const [filesData,setFilesData]=useState();
+  const [filesData, setFilesData] = useState();
 
-
-  const { call1, totalData } = useFile();
-
+  const {
+    fileData,
+    addFileFunction,
+    isAdminFunction,
+    signInFunction,
+    signUpFunction,
+    newDownloadByUserFunction,
+    adminAddFunction,
+  } = useFile();
 
   const handleSubmission = async () => {
-    // console.log(file.size);
     setFileName(file.name);
-    // setFileHash(fileHash + 1);
+
     setFileSize(file.size);
 
     const date = new Date();
@@ -37,6 +42,10 @@ const FileUpload = () => {
 
     let currentDate = `${day}-${month}-${year}`;
     setDate(currentDate);
+
+    let currentTime = new Date().toLocaleTimeString();
+
+    setTime(currentTime);
 
     let temp = file.name.split(".");
     temp = temp[temp.length - 1];
@@ -75,7 +84,6 @@ const FileUpload = () => {
       );
       console.log(res.data.IpfsHash);
       setIpfsHash(res.data.IpfsHash);
-      
     } catch (error) {
       console.log(error);
     }
@@ -87,9 +95,19 @@ const FileUpload = () => {
     setIsUploaded(true);
   };
 
-  const call1Handler=async()=>{
-    await call1(ipfsHash, fileName, fileType, date,fileSize);
-  }
+  const callHandler = async () => {
+    let data = await addFileFunction(
+      "0x39ee928476d24c200528118579d6d16ca011DA08",
+      ipfsHash,
+      fileName,
+      fileType,
+      date,
+      time,
+      fileSize
+    );
+
+    console.log(data);
+  };
 
   return (
     <>
@@ -106,14 +124,17 @@ const FileUpload = () => {
           Choose A File'
           <input type="file" onChange={changeImage} className="inputItem" />
         </label>
-        <button className="label" onClick={handleSubmission} disabled={!isUloaded}>
+        <button
+          className="label"
+          onClick={handleSubmission}
+          disabled={!isUloaded}
+        >
           Submit
         </button>
 
-        <button className="label" onClick={call1Handler} disabled={!isUloaded}>
+        <button className="label" onClick={callHandler} disabled={!isUloaded}>
           Save Changes
         </button>
-
       </div>
     </>
   );

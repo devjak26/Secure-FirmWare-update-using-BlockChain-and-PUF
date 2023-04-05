@@ -11,23 +11,37 @@ import Login from "./pages/signin/Signin";
 import Register from "./pages/signUp/Signup";
 import FileUpload from "./pages/FileUpload/FileUpload";
 import SimpleTable from "./pages/table/SimpleTable";
-import Profile from "./pages/profile/Profile"
+import Profile from "./pages/profile/Profile";
 
 const App = () => {
-  const [isLogedIn, setIsLogedIn] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isLogedIn, setIsLogedIn] = useState(
+    JSON.parse(localStorage.getItem("isLogedIn"))
+  );
+  const [data, setData] = useState(JSON.parse(localStorage.getItem("user")));
+  const [isAdmin, setIsAdmin] = useState(
+    JSON.parse(localStorage.getItem("isAdmin"))
+  );
 
   const logOutHandler = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("isLogedIn");
+    localStorage.removeItem("isAdmin");
     setIsLogedIn(false);
     setIsAdmin(false);
+    console.log("log out");
   };
 
-  const logedinHandler = () => {
+  const logedinHandler = (user) => {
+    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("isLogedIn", JSON.stringify(true));
     setIsLogedIn(true);
+    console.log("loged in", user);
   };
 
   const adminHandler = () => {
     setIsAdmin(true);
+    localStorage.setItem("isAdmin", JSON.stringify(true));
+    console.log("loged in is admin");
   };
 
   return (
@@ -36,7 +50,7 @@ const App = () => {
         <div className="navBar">
           <Navbar
             isLogedIn={isLogedIn}
-            logoutHandler={logOutHandler}
+            logOutHandler={logOutHandler}
             isAdmin={isAdmin}
           />
         </div>
@@ -50,7 +64,7 @@ const App = () => {
               element={
                 <Login
                   isLogedIn={isLogedIn}
-                  isLogedinHandler={logedinHandler}
+                  logedinHandler={logedinHandler}
                   adminHandler={adminHandler}
                 />
               }
@@ -61,7 +75,7 @@ const App = () => {
               element={
                 <Register
                   isLogedIn={isLogedIn}
-                  isLogedinHandler={logedinHandler}
+                  logedinHandler={logedinHandler}
                   adminHandler={adminHandler}
                 />
               }
@@ -74,7 +88,9 @@ const App = () => {
 
             <Route
               path="/profile"
-              element={<Profile isAdmin={isAdmin} />}
+              element={
+                <Profile isAdmin={isAdmin} user={data} isLogedIn={isLogedIn} />
+              }
             />
           </Routes>
         </div>

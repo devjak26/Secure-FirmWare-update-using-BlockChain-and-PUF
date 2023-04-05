@@ -50,3 +50,27 @@
 .btn {
   color: black;
 }
+
+.SearchPanel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
+  height: 50px;
+  background-color: rgb(6, 223, 239);
+}
+.SearchInput {
+  width: 100%;
+  max-width: 500px;
+  padding: 20px; 
+  font-size: 18px; 
+  border: 2px solid rgb(29, 221, 231);
+  border-radius: 4px;
+  outline: none;
+  box-sizing: border-box; 
+  margin: 10px; 
+  color: rgb(4, 249, 0);
+}
+.SearchInput:focus {
+  border-color: rgb(5, 231, 247);
+}
