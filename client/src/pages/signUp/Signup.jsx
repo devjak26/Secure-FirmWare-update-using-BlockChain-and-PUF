@@ -21,7 +21,7 @@ const signup = ({ isLogedIn, logedinHandler, adminHandler }) => {
     newDownloadByUserFunction,
     adminAddFunction,
     filesUploadedbyAdmin,
-    filesdownloadedbyUser
+    filesdownloadedbyUser,
   } = useFile();
 
   const address = useAddress();
@@ -45,12 +45,14 @@ const signup = ({ isLogedIn, logedinHandler, adminHandler }) => {
         user.email
       );
 
-      let cc=await signup.receipt;
+      let cc = await signup.receipt;
 
       console.log(cc);
 
-      if (cc!=undefined) {
-        await logedinHandler();
+      if (cc != undefined) {
+        const signupuser = [user.fname, user.uname, user.email, address];
+        console.log(signupuser);
+        logedinHandler(signupuser);
 
         // check for admin in backend
         let isadmin = await isAdminFunction(address);

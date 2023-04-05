@@ -29,10 +29,13 @@ const Signin = ({ isLogedIn, logedinHandler, adminHandler }) => {
 
     if (address != undefined) {
       let signin = await signInFunction(address);
-      console.log(signin.isexist);
 
+      console.log(signin.isexist);
+      
       if (signin.isexist == true) {
-        await logedinHandler();
+        const user=[signin.name,signin.username,signin.email,address];
+        console.log(user);
+        logedinHandler(user);
 
         // check for admin in backend
         let isadmin = await isAdminFunction(address);
