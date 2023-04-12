@@ -12,7 +12,7 @@ const JWT = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24
 const FileUpload = ({ isAdmin }) => {
   const [file, setFile] = useState(null);
   const [displayImg, setDisplayImg] = useState("none");
-  const [isUloaded, setIsUploaded] = useState(false);
+
   const [fileName, setFileName] = useState("");
   const [fileType, setFileType] = useState("");
   const [date, setDate] = useState("");
@@ -23,7 +23,8 @@ const FileUpload = ({ isAdmin }) => {
   const [filesData, setFilesData] = useState();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  // const [uploaded,setUploaded]=useState(false);
+  const [isUloaded, setIsUploaded] = useState(false);
+  const [PUF, setPUF] = useState("");
 
   useEffect(() => {
     if (ipfsHash != "") {
@@ -40,6 +41,11 @@ const FileUpload = ({ isAdmin }) => {
     newDownloadByUserFunction,
     adminAddFunction,
   } = useFile();
+
+  const PUFHandler = (e) => {
+    setPUF(e.target.value);
+    console.log(e.target.value);
+  };
 
   const handleSubmission = async () => {
     setFileName(file.name);
@@ -101,12 +107,15 @@ const FileUpload = ({ isAdmin }) => {
     } catch (error) {
       console.log(error);
     }
+
+    setIsUploaded(false);
   };
 
   const changeImage = (e) => {
     setFile(e.target.files[0]);
     setDisplayImg("block");
     setIsUploaded(true);
+    toast("Please Insert PUF Key..");
   };
 
   const callHandler = async () => {
@@ -117,7 +126,8 @@ const FileUpload = ({ isAdmin }) => {
       fileType,
       date,
       time,
-      fileSize
+      fileSize,
+      PUF
     );
 
     console.log(data);
@@ -157,19 +167,14 @@ const FileUpload = ({ isAdmin }) => {
         <PacmanLoader color="#36d7b7" className="loader" size="50px" />
       ) : (
         <div className="fileUpload">
-          <h2>File Upload Page</h2>
           <div className="total">
             <div className="aboutUs">
               Welcome to the file upload page for admin. Here, you can securely
               upload firmware files and provide a unique public key for users to
-              access them. You can also provide additional information about the
-              firmware, such as version numbers and release notes. Please make
-              sure that the file you upload is in a supported format and that
-              you have the necessary permissions to share it with others. Once
-              the file is uploaded, users with the corresponding public key can
-              easily download it from the website. Thank you for your
-              contribution to our secure firmware file storage.
+              access them. Thank you for your contribution to our secure
+              firmware file storage.
             </div>
+
             <div className="right">
               <div className="input">
                 <img
@@ -183,21 +188,35 @@ const FileUpload = ({ isAdmin }) => {
                   className="img"
                 />
 
+                <div
+                  className="PUF"
+                  style={isUloaded ? { display: "block" } : { display: "none" }}
+                >
+                  <input
+                    className="form-c"
+                    type="text"
+                    placeholder="Input PUF Key"
+                    onChange={PUFHandler}
+                  />
+                </div>
+
+                <button
+                  className="label"
+                  onClick={handleSubmission}
+                  style={isUloaded ? { display: "block" } : { display: "none" }}
+                >
+                  Submit
+                </button>
+
                 <label className="label">
-                  Choose A File'
+                  {isUloaded ? "Choose Another File" : "Choose A File"}
+
                   <input
                     type="file"
                     onChange={changeImage}
                     className="inputItem"
                   />
                 </label>
-                <button
-                  className="label"
-                  onClick={handleSubmission}
-                  disabled={!isUloaded}
-                >
-                  Submit
-                </button>
               </div>
             </div>
           </div>

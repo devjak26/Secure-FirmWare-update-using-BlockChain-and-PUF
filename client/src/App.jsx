@@ -18,6 +18,7 @@ const App = () => {
   const [isLogedIn, setIsLogedIn] = useState(
     JSON.parse(localStorage.getItem("isLogedIn"))
   );
+
   const [data, setData] = useState(JSON.parse(localStorage.getItem("user")));
   const [isAdmin, setIsAdmin] = useState(
     JSON.parse(localStorage.getItem("isAdmin"))

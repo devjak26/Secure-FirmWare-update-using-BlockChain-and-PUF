@@ -20,10 +20,13 @@
 
 .fileUpload > .total{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     padding:10px 20px;
     margin-top: 30px;
+    width: 60%;
+    margin: auto;
+    text-align: center;
 }
 
 .fileUpload > .total > .aboutUs{
@@ -34,14 +37,15 @@
     letter-spacing: 2px;
     word-spacing: 4px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    background-color: #382b43;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: rgba(84, 137, 152, 0.5);
     border-radius: 20px;
     font-weight: 600;
 }
 
 .fileUpload > .total > .right{
-    padding: 10px;
-    margin: 10px;
+    padding: 20px;
+    margin: 20px;
     line-height: 30px;
     font-size: large;
     letter-spacing: 2px;
@@ -60,13 +64,15 @@
     word-spacing: 6px;
     /* background: rgba(0, 0, 0, 0.155); */
     backdrop-filter: blur(10px);
-    border: 2px solid #06fece;
+    border: 3px solid #1f2e57;
     border-radius: 2rem;
-    /* box-shadow: 5px 5px rgba(128, 128, 128, 0.672); */
     height: 70vh;
     width: 40vw;
     min-width: 350px;
     margin-top: 3rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: rgba(84, 137, 152, 0.5);
+    padding: 30px;
 }
 
 .inputItem{
@@ -79,20 +85,27 @@
 }
 
 .label{
-    border: 1px solid #06fece;
     /* margin: 6px; */
     padding: 6px;
     font-weight: 500;
     font-size: large;
-    background-color: #06fece;
     color: #1d242c;
+    font-size: x-large;
+    border: 3px solid #1f2e57;
+    color: rgb(1, 1, 1);
+    font-weight: 700;
+    margin-top: 35px;
+    letter-spacing: 2px;
+    word-spacing: 4px;
+    background-color: #467c9b;
 }
 
 .label:hover{
-    cursor: pointer;
-    background-color: #06fece;
     font-weight: 600;
     color: #1d242c;
+    cursor: pointer;
+    background: linear-gradient(to right, #1f2e57 0%, #467c9b 100%);
+    color: white;
 }
 
 span{
@@ -107,4 +120,19 @@ span{
     text-decoration: #06fece underline;
     letter-spacing: 3px;
     word-spacing: 6px;
+}
+
+.PUF{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-top: 15px;
+}
+
+.form-c{
+    width: 16vw;
+    height: 7vh;
+    font-size: x-large;
+    color: black;
 }

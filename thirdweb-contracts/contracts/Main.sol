@@ -10,6 +10,7 @@ contract Main {
         string dateAdded;
         string timeAdded;
         uint256 downloadCount;
+        string PUF;
     }
 
     // user info structure for sign up
@@ -127,7 +128,8 @@ contract Main {
         string memory _fileType,
         string memory _dateAdded,
         string memory _timeAdded,
-        uint256 _fileSize
+        uint256 _fileSize,
+        string memory _PUF
     ) public {
         DocInfo memory docInfo = DocInfo(
             _ipfsHash,
@@ -136,7 +138,8 @@ contract Main {
             _fileSize,
             _dateAdded,
             _timeAdded,
-            0
+            0,
+            _PUF
         );
 
         metadata.push(docInfo);

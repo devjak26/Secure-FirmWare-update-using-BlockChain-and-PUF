@@ -28,10 +28,13 @@ const Table = ({ user }) => {
     adminAddFunction,
     filesUploadedbyAdmin,
     filesdownloadedbyUser,
+    PUF,
+    PUFgetter,
   } = useFile();
 
   useEffect(() => {
     console.log("data in Table file...", fileData);
+    console.log(PUF);
 
     if (fileData != undefined && fileData.length > 0) setLoading(false);
   }, [fileData]);
@@ -49,16 +52,18 @@ const Table = ({ user }) => {
     }
   }, [dataRecevied]);
 
-  const handleDownload = async (IpfsHash) => {
+  const handleDownload = async (IpfsHash,Puf) => {
     // Here you can add your download logic, for example:
     // console.log(user[3],IpfsHash);
+    console.log(PUF);
+    PUFgetter(Puf);
     const baseURL = `https://gateway.pinata.cloud/ipfs/`;
     const URL = `${baseURL}${IpfsHash}`;
     setUrl(URL);
     // downloadFun(URL);
     console.log("before");
     const data = await newDownloadByUserFunction(user[3], IpfsHash);
-    console.log(data.receipt);
+    // console.log(data.receipt);
 
     if (data.receipt) {
       setDataRecieved(true);
@@ -96,6 +101,7 @@ const Table = ({ user }) => {
           </div>
 
           {fileData.map((software, index) => {
+            console.log(software);
             if (software[1].includes(searchtext)) {
               return (
                 <div>
@@ -104,9 +110,8 @@ const Table = ({ user }) => {
                       <div className="f1">{software[1]}</div>
 
                       <div className="f2" onClick={() => ExpandHandler(index)}>
-                        {expand!=index? "show more": "show less"}
+                        {expand != index ? "show more" : "show less"}
                       </div>
-
                     </div>
 
                     <ul
@@ -127,7 +132,7 @@ const Table = ({ user }) => {
                           }`}
                           onClick={(e) => {
                             e.stopPropagation();
-                            handleDownload(software[0]);
+                            handleDownload(software[0],software[7]);
                           }}
                         >
                           {selected === index ? "Download" : "Download"}

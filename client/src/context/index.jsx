@@ -14,9 +14,10 @@ const FileContext = createContext();
 
 const FileProvider = ({ children }) => {
   const [fileData, setfileData] = useState([]);
+  const [ PUF, setPUF ] = useState("");
 
   const { contract } = useContract(
-    "0x62B63a6D2E32eF47755d77dfC6EaCF2eE0C3f2DA"
+    "0xE706Af419E51344bA9F261dF9912A027fa1E47AF"
   );
 
   useEffect(() => {
@@ -24,6 +25,11 @@ const FileProvider = ({ children }) => {
       getFilesFunction();
     }
   }, [contract]);
+
+  const PUFgetter = (PUFKEY) => {
+    setPUF(PUFKEY);
+    console.log(PUF);
+  };
 
   const { mutateAsync: addFile, isLoading } = useContractWrite(
     contract,
@@ -52,10 +58,11 @@ const FileProvider = ({ children }) => {
     fileType,
     date,
     time,
-    fileSize
+    fileSize,
+    PUF
   ) => {
     try {
-      console.log(ipfsHash, fileName, fileType, date, time, fileSize);
+      console.log(ipfsHash, fileName, fileType, date, time, fileSize, PUF);
       await connect();
       // await address();
       console.log("address...", address);
@@ -67,6 +74,7 @@ const FileProvider = ({ children }) => {
         date,
         time,
         fileSize,
+        PUF,
       ]);
 
       console.info("contract call successs", data);
@@ -171,6 +179,8 @@ const FileProvider = ({ children }) => {
         adminAddFunction,
         filesUploadedbyAdmin,
         filesdownloadedbyUser,
+        PUF,
+        PUFgetter,
       }}
     >
       {children}
