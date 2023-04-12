@@ -13,6 +13,7 @@ import FileUpload from "./pages/FileUpload/FileUpload";
 import SimpleTable from "./pages/table/SimpleTable";
 import Profile from "./pages/profile/Profile";
 import History from "./pages/history/History";
+import Validate from "./pages/validate/validate";
 
 const App = () => {
   const [isLogedIn, setIsLogedIn] = useState(
@@ -23,6 +24,13 @@ const App = () => {
   const [isAdmin, setIsAdmin] = useState(
     JSON.parse(localStorage.getItem("isAdmin"))
   );
+
+  const [PUF, setPUF] = useState(JSON.parse(localStorage.getItem("PUF")));
+
+  const PUFhandler = (key) => {
+    localStorage.setItem("PUF", JSON.stringify(key));
+    console.log(key);
+  };
 
   const logOutHandler = () => {
     localStorage.removeItem("user");
@@ -59,7 +67,10 @@ const App = () => {
 
         <div>
           <Routes>
-            <Route path="/" element={<SimpleTable user={data} />} />
+            <Route
+              path="/"
+              element={<SimpleTable user={data} PUFhandler={PUFhandler} />}
+            />
 
             <Route
               path="/login"
@@ -90,13 +101,22 @@ const App = () => {
 
             <Route
               path="/history"
-              element={<History isAdmin={isAdmin} user={data}/>}
+              element={<History isAdmin={isAdmin} user={data} />}
             />
 
             <Route
               path="/profile"
               element={
                 <Profile isAdmin={isAdmin} user={data} isLogedIn={isLogedIn} />
+              }
+            />
+
+            <Route
+              path="/validate"
+              element={
+                <Validate
+                  PUF={PUF}
+                />
               }
             />
           </Routes>

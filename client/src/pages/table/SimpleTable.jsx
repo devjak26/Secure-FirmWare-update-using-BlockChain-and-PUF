@@ -4,7 +4,7 @@ import { useFile } from "../../context/index";
 import "./SimpleTable.css";
 import PacmanLoader from "react-spinners/PacmanLoader";
 
-const Table = ({ user }) => {
+const Table = ({ user,PUFhandler }) => {
   const [selected, setSelected] = useState(null);
   const [dataRecevied, setDataRecieved] = useState(false);
   const [url, setUrl] = useState(null);
@@ -28,13 +28,10 @@ const Table = ({ user }) => {
     adminAddFunction,
     filesUploadedbyAdmin,
     filesdownloadedbyUser,
-    PUF,
-    PUFgetter,
   } = useFile();
 
   useEffect(() => {
     console.log("data in Table file...", fileData);
-    console.log(PUF);
 
     if (fileData != undefined && fileData.length > 0) setLoading(false);
   }, [fileData]);
@@ -55,8 +52,8 @@ const Table = ({ user }) => {
   const handleDownload = async (IpfsHash,Puf) => {
     // Here you can add your download logic, for example:
     // console.log(user[3],IpfsHash);
-    console.log(PUF);
-    PUFgetter(Puf);
+    // console.log(PUF);
+    PUFhandler(Puf);
     const baseURL = `https://gateway.pinata.cloud/ipfs/`;
     const URL = `${baseURL}${IpfsHash}`;
     setUrl(URL);
