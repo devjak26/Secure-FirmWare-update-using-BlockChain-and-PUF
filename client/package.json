@@ -43,6 +43,7 @@
     "react-spinners": "^0.13.8",
     "react-toastify": "^9.1.2",
     "react-tsparticles": "^2.9.3",
+    "sjcl": "^1.0.8",
     "solid-collapse": "^1.1.0",
     "styled-components": "^5.3.9",
     "tsparticles": "^2.9.3",

@@ -3,8 +3,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useFile } from "../../context/index";
 import "./SimpleTable.css";
 import PacmanLoader from "react-spinners/PacmanLoader";
+import { useNavigate } from "react-router-dom";
 
-const Table = ({ user,PUFhandler }) => {
+const Table = ({ user,PUFhandler ,IPFSHandler}) => {
+  const navigate = useNavigate();
   const [selected, setSelected] = useState(null);
   const [dataRecevied, setDataRecieved] = useState(false);
   const [url, setUrl] = useState(null);
@@ -36,10 +38,10 @@ const Table = ({ user,PUFhandler }) => {
     if (fileData != undefined && fileData.length > 0) setLoading(false);
   }, [fileData]);
 
-  const downloadFun = (URL) => {
-    console.log("test: ", URL);
-    window.location.replace(URL);
-  };
+  // const downloadFun = (URL) => {
+  //   console.log("test: ", URL);
+  //   window.location.replace(URL);
+  // };
 
   useEffect(() => {
     if (dataRecevied) {
@@ -54,18 +56,8 @@ const Table = ({ user,PUFhandler }) => {
     // console.log(user[3],IpfsHash);
     // console.log(PUF);
     PUFhandler(Puf);
-    const baseURL = `https://gateway.pinata.cloud/ipfs/`;
-    const URL = `${baseURL}${IpfsHash}`;
-    setUrl(URL);
-    // downloadFun(URL);
-    console.log("before");
-    const data = await newDownloadByUserFunction(user[3], IpfsHash);
-    // console.log(data.receipt);
-
-    if (data.receipt) {
-      setDataRecieved(true);
-      console.log("after", URL);
-    }
+    IPFSHandler(IpfsHash);
+    navigate("/validate");
   };
 
   const [searchtext, setSearch] = useState("");

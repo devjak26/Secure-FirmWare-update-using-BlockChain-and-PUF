@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Challenges from "./Challenges";
 
-const validate = ({PUF}) => {
+const validate = ({PUF,ipfs,user}) => {
 
   const [challenges, setChallenges] = useState([
     "Xd029Fbk",
@@ -117,7 +117,9 @@ const validate = ({PUF}) => {
     <div>
       <Challenges 
       challenges={currChallenges} 
-      PUF={PUF}/>
+      PUF={PUF}
+      ipfs={ipfs}
+      user={user}/>
     </div>
   )
 }
