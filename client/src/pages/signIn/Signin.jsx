@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useAddress, useMetamask } from "@thirdweb-dev/react";
 import { useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import "./signin.css";
 import { useFile } from "../../context/index";
-
+import logo from "./1.avif";
 const Signin = ({ isLogedIn, logedinHandler, adminHandler }) => {
-  const address = useAddress();
   const connect = useMetamask();
+  const address = useAddress();
 
   // console.log("Hello from signin");
   const {
@@ -24,6 +24,7 @@ const Signin = ({ isLogedIn, logedinHandler, adminHandler }) => {
 
   const handleSubmission = async () => {
     await connect();
+    // await address();
     console.log("address", address);
     // console.log(typeof address);
 
@@ -49,10 +50,15 @@ const Signin = ({ isLogedIn, logedinHandler, adminHandler }) => {
   return (
     <div className="login">
       {isLogedIn && <Navigate to="/" replace={true} />}
-      <div className="heading">Sign In Page</div>
-      <button className="btn" onClick={handleSubmission}>
-        Sign In With MetaMask
-      </button>
+      <div className="right">
+        <div className="para">
+          Welcome to our secure firmware file update website! If you are
+          already a registered user, please sign in using your Metamask account.
+        </div>
+        <button className="btn" onClick={handleSubmission}>
+          Sign In With MetaMask
+        </button>
+      </div>
     </div>
   );
 };

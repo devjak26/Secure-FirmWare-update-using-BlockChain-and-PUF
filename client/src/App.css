@@ -4,10 +4,13 @@
 }
 
 .App{
-    /* background: linear-gradient(to right, #379d91 0%, #a34d76 100%); */
-    background-color: #1d242c;
-    color-scheme: dark;
-    /* color: rgb(23, 24, 25); */
+    /* background-image: linear-gradient(to bottom, #2680e0, #2765c0, #244ba1, #1f3282, #171a64); */
+    
+    background-color: #171a64;
+    /* background-color: rgb(53, 69, 81); */
+    /* background-color: #659DBD;
+    background-color: #2F4454; */
+    background: linear-gradient(to right, #1f2e57 0%, #467c9b 100%);
     display: flex;
     flex-direction: column;
     /* flex-wrap: wrap; */
@@ -26,6 +29,3 @@
     font-weight: 600;
 } */
 
-.navBar{
-    margin-top: 15px;
-}

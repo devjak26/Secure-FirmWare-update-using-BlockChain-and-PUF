@@ -1,57 +1,76 @@
-/* .navbar{
-    z-index: 1;
-    overflow: hidden;
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    background-color: rgb(38, 5, 70);
-} */
 
 .Navbar{
-    /* background-color: rgba(113, 34, 187, 0.628); */
-    border: 2px solid #06fece;
-    color: #06fece;
-    width: 95vw;
-    height: 80px;
-    margin-left: 20px;
-    margin-right: 20px;
+    width: 100vw;
+    height: 62px;
+    /* margin-left: 20px;
+    margin-right: 20px; */
+    margin: 0;
+    padding: 0;
     font-size: x-large;
+    display: flex;
+    flex-direction: row;
+    /* justify-content: center; */
+    align-items: center;
+    text-align: center;
+    backdrop-filter: blur(14px);
+    background-color: rgba(15, 13, 24, 0.8);
+    text-align: center;
+    /* background-color: #000; */
 }
 
 .Navbar>.ul {
     list-style: none;
     display: flex;
-    justify-content: space-between;
-    /* background-color: beige; */
-    /* padding: 20px; */
-    /* padding: 20px 0; */
-    padding-left: 20px;
+    justify-content:flex-end;
+    padding-top: 12px;
+
+    padding-right: 10px;
     align-items: center;
-    margin-left: 0;
+    /* margin-right: 5px; */
+    /* float: right; */
+    flex-grow: 100;
 }
 
 .Navbar> .ul li a{
     text-decoration: none;
-    background-color: #1d242c;
-    color: #06fece;
+    color: #ffffff;
     padding: 10px 20px;
     align-items: center;
     justify-content: center;
     /* margin-top: 20px; */
-    font-weight: bold;
+    font-weight:500;
+    /* border: 2px solid brown; */
+    margin-left: 150px;
+    letter-spacing: 2px;
 }
-
-/* .ul li:first-child{
-
-     padding-bottom: 15px;
-} */
+  
 
 .Navbar>.ul li a:hover{
-    background-color: #06fece;
-    color: #1d242c;
+    /* background-color: #06fece; */
+    /* color: #1d242c; */
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.logOut{
+    font-size: x-large;
+    font-weight:500;
+    margin-left: 150px;
+    margin-right: 20px;
+    color: white;
+}
+
+.logOut:hover{
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 .logo{
-    margin: 0;
-    padding: 0;
+    /* margin-left: 10px; */
+    padding-left: 10px;
+    font-size: 50px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 3px;
+    font-family:'Courier New', Courier, monospace;
 }

@@ -56,7 +56,8 @@ const FileProvider = ({ children }) => {
   ) => {
     try {
       console.log(ipfsHash, fileName, fileType, date, time, fileSize);
-      connect();
+      await connect();
+      // await address();
       console.log("address...", address);
       const data = await addFile([
         address,
@@ -89,6 +90,7 @@ const FileProvider = ({ children }) => {
   };
 
   const signInFunction = async (address) => {
+    await connect();
     const signin = await contract.call("signIn", address);
     console.log("signin:", signin);
     return signin;
@@ -96,7 +98,8 @@ const FileProvider = ({ children }) => {
 
   const signUpFunction = async (address, name, userName, email) => {
     try {
-      connect();
+      await connect();
+      // await address();
       const data = await contract.call(
         "signUp",
         address,
@@ -129,7 +132,8 @@ const FileProvider = ({ children }) => {
 
   const newDownloadByUserFunction = async (address, ipfs) => {
     try {
-      connect();
+      await connect();
+      // await address();
       const data = await newDownloadByUser([address, ipfs]);
       console.info("contract call successs", data);
       return data;
@@ -141,7 +145,8 @@ const FileProvider = ({ children }) => {
 
   const adminAddFunction = async (prev, newAdmin) => {
     try {
-      connect();
+      await connect();
+      // await address();
       const data = await adminAdd([prev, newAdmin]);
       console.info("contract call successs", data);
       return data;

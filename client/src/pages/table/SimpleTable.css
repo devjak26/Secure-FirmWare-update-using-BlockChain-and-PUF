@@ -1,5 +1,5 @@
 .quizRecord {
-  /* width: 80%; */
+  width: 75%;
   /* display: flex;
     justify-content: center; */
   margin: auto;
@@ -8,69 +8,103 @@
   margin-top: 3rem;
   margin-bottom: 0;
   padding-bottom: 0;
-  color: white;
+  color: rgb(0, 0, 0);
+  letter-spacing: 2px;
+  word-spacing: 4px;
 }
 
-.quizRecord> .heading{
+.quizRecord> .head{
   display: flex;
   justify-content: center;
   font-size: xx-large;
-  text-decoration: underline;
-  padding-bottom: 30px;
+  padding-bottom: 10px;
   word-spacing: 2px;
   letter-spacing: 1px;
+  color:black;
 }
 
-.quizRecord>table {
-  background-color: rgb(255, 255, 255);
-  color: rgb(0, 0, 0);
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  border: 2px solid forestgreen;
-  width: 60vw;
-  min-width: 500px;
-  /* height: 200px; */
+.quizRecord > .para{
+  font-size: x-large;
+  padding-bottom: 40px;
+  color:black;
 }
 
-.quizRecord>table>tr>th {
-  border-bottom: 1px solid forestgreen;
-  padding-bottom: 5px;
-  padding-top: 5px;
-  text-align: center;
-  padding-bottom: 5px;
-  padding-top: 5px;
-}
-
-.quizRecord>table>tr>td {
-  text-align: center;
-  padding-bottom: 5px;
-  padding-top: 5px;
-  /* border-bottom: 1px solid white; */
-}
 
 .btn {
   color: black;
 }
 
-.SearchPanel {
+.downloadSearch {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 40px;
   height: 50px;
-  background-color: rgb(6, 223, 239);
+  background-color: #1f2e57;
+  width: 75%;
+  margin: auto;
+  margin-bottom: 40px;
+
 }
-.SearchInput {
+
+.downloadSearchInput {
   width: 100%;
   max-width: 500px;
   padding: 20px; 
   font-size: 18px; 
-  border: 2px solid rgb(29, 221, 231);
+  border: 2px solid #1f2e57;
   border-radius: 4px;
   outline: none;
   box-sizing: border-box; 
   margin: 10px; 
-  color: rgb(4, 249, 0);
+  color: rgb(5, 5, 5);
 }
-.SearchInput:focus {
-  border-color: rgb(5, 231, 247);
+
+.downloadSearchInput:focus {
+  border-color: #1f2e57;
+}
+
+
+.loader{
+  margin-top: 140px;
+}
+
+ .data{
+  width: 90%;
+  margin: auto;
+  color: black;
+}
+
+.main{
+  /* border: 2px solid blue; */
+  background-color: rgba(84, 137, 152, 0.9);
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 10px;
+  border: 2px solid blue;
+}
+
+ .main >.f1{
+  font-size: x-large;
+}
+
+ .main >.f2{
+  font-size: large;
+}
+
+ .main >.f2:hover{
+  text-decoration: underline;
+  cursor: pointer;
+  /* color: white; */
+}
+
+.app-expand{
+  display: block;
+  list-style: none;
+  background-color: aqua;
+}
+
+.f3{
+  display: none;
 }

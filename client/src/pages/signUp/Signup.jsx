@@ -4,13 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import "./signup.css";
 import { useFile } from "../../context/index";
-
+import PacmanLoader from "react-spinners/PacmanLoader";
 const signup = ({ isLogedIn, logedinHandler, adminHandler }) => {
   const [user, setUser] = useState({
     fname: "",
     uname: "",
     email: "",
   });
+
+  const [loading, setLoading] = useState(false);
 
   const {
     fileData,
@@ -34,10 +36,12 @@ const signup = ({ isLogedIn, logedinHandler, adminHandler }) => {
   const registerHandler = async () => {
     // console.log(user);
     await connect();
+    // await address();
     console.log("address", address);
     // console.log(typeof address);
 
     if (address != undefined) {
+      setLoading(true);
       let signup = await signUpFunction(
         address,
         user.fname,
@@ -60,37 +64,52 @@ const signup = ({ isLogedIn, logedinHandler, adminHandler }) => {
 
         if (isadmin == true) await adminHandler();
       }
+
+      setLoading(false);
     }
   };
 
   return (
-    <div className="signup">
-      {isLogedIn && <Navigate to="/" replace={true} />}
-      <h2 className="heading">Register Page</h2>
+    <>
+      {loading ? (
+        <PacmanLoader color="#36d7b7" className="loader" size="50px" />
+      ) : (
+        <div className="signup">
+          {isLogedIn && <Navigate to="/" replace={true} />}
 
-      <div className="register-form">
-        <div className="input-container">
-          <label>Name</label>
-          <input type="text" name="fname" required onChange={userHandler} />
-        </div>
+          <div className="register-form">
+            <div className="para">
+              please sign up using Metamask account.
+            </div>
+            <div className="input-container">
+              <label>Name</label>
+              <input type="text" name="fname" required onChange={userHandler} />
+            </div>
 
-        <div className="input-container">
-          <label>User Name</label>
-          <input type="text" name="uname" required onChange={userHandler} />
-        </div>
+            <div className="input-container">
+              <label>User Name</label>
+              <input type="text" name="uname" required onChange={userHandler} />
+            </div>
 
-        <div className="input-container">
-          <label>Email</label>
-          <input type="email" name="email" required onChange={userHandler} />
-        </div>
+            <div className="input-container">
+              <label>Email</label>
+              <input
+                type="email"
+                name="email"
+                required
+                onChange={userHandler}
+              />
+            </div>
 
-        <div className="button-container">
-          <button className="registerBtn" onClick={registerHandler}>
-            Sign Up with Metamask
-          </button>
+            <div className="button-container">
+              <button className="registerBtn" onClick={registerHandler}>
+                Sign Up with Metamask
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

@@ -3,7 +3,7 @@ import "./profile.css";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import profileimg from "./profileimg.png";
+import profileimg from "./web-user.jpg";
 import axios from "axios";
 import { useFile } from "../../context/index";
 
@@ -28,7 +28,7 @@ const Profile = ({ isAdmin, user, isLogedIn }) => {
     setNewAdmin(event.target.value);
   };
 
-  const submitNewAdmin = async() => {
+  const submitNewAdmin = async () => {
     await adminAddFunction(user[3], newAdmin);
   };
 
@@ -64,46 +64,58 @@ const Profile = ({ isAdmin, user, isLogedIn }) => {
       <ToastContainer />
 
       <div className="section">
-        <div className="profilehead">{user[1]} profile</div>
+        <div className="profilehead"> User profile</div>
         <div className="container">
           <div className="left">
             <img
               src={profileimg}
               alt="avatar"
               className="rounded-circle"
-              width="85%"
+              width="80%"
+              height="90%"
             ></img>
           </div>
 
           <div className="right">
             <div className="username">Name : {user[0]}</div>
+            <div className="username">UserName : {user[1]}</div>
             <div className="useremail">Email : {user[2]}</div>
             <div className="address">MetaMask Address : {user[3]}</div>
 
             <div className="btns">
-              <button className="btn" onClick={historyHandler}>History</button>
+              <button className="btn" onClick={historyHandler}>
+                Check History
+              </button>
 
               {isAdmin && (
                 <button className="btn" onClick={uploadHandler}>
-                  UploadFile
+                  Upload File
                 </button>
               )}
             </div>
           </div>
         </div>
 
-        <div className="bottom">
-          <input
-            className="form-control"
-            type="text"
-            placeholder="Input New Admin Address"
-            onChange={changenewAdmin}
-          />
+        {isAdmin && (
+          <div className="bottom">
+            <div className="para">
+              Please provide the Metamask address of the new user if you would
+              like to add them as an admin.
+            </div>
+            <div className="inner">
+              <input
+                className="form-control"
+                type="text"
+                placeholder="Input New Admin Address"
+                onChange={changenewAdmin}
+              />
 
-          <button className="btn" onClick={submitNewAdmin}>
-            Admin Add
-          </button>
-        </div>
+              <button className="btn" onClick={submitNewAdmin}>
+                Admin Add
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
