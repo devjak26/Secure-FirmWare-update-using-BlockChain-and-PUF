@@ -28,10 +28,6 @@ const Challenges = ({ challenges, PUF, ipfs, user }) => {
     return myHash;
   }
 
-  const [response1, setresponse1] = useState("");
-  const [response2, setresponse2] = useState("");
-  const [response3, setresponse3] = useState("");
-  const [Url,setUrl]=useState();
 
   const {
     fileData,
@@ -50,6 +46,11 @@ const Challenges = ({ challenges, PUF, ipfs, user }) => {
   const op1=sha256(challenges[0] + pufKey);
   const op2=sha256(challenges[1] + pufKey);
   const op3=sha256(challenges[2] + pufKey);
+
+  const [response1, setresponse1] = useState(op1);
+  const [response2, setresponse2] = useState(op2);
+  const [response3, setresponse3] = useState(op3);
+  const [Url,setUrl]=useState();
 
   useEffect(()=>{
     console.log(PUF);

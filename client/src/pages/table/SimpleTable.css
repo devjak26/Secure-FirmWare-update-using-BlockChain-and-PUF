@@ -102,7 +102,9 @@
 .app-expand{
   display: block;
   list-style: none;
-  background-color: aqua;
+  background-color: rgb(2, 64, 151);
+  font-size: larger;
+  padding: 10px;
 }
 
 .f3{

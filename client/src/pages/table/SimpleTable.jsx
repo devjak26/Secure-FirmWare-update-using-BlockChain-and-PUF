@@ -109,9 +109,10 @@ const Table = ({ user,PUFhandler ,IPFSHandler}) => {
                       onClick={() => setSelected(index)}
                     >
                       <li>File Type: {software[2]}</li>
+                      <li>File Size: {Math.round(parseInt(software[3])/1024)} Kb</li>
                       <li>Date Added: {software[4]}</li>
-                      <li>File Name: {software[1]}</li>
-                      <li>File Name: {software[1]}</li>
+                      <li>Time Stamp: {software[5]}</li>
+                      <li>Total Downloads: {parseInt(software[6])}</li>
                       <li>
                         <button
                           className={`btn ${
